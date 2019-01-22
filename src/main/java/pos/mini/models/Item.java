@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 public class Item {
 
     @Id
-    private static int id;
+    private int id;
 
     @NotBlank
     private String name;
@@ -22,12 +22,12 @@ public class Item {
         id++;
     }
 
-    public static int getId() {
+    public  int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Item.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

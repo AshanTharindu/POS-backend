@@ -7,7 +7,7 @@ import java.util.List;
 public class Order {
 
     @Id
-    private static int id;
+    private int id;
 
     private int userId;
     private double total;
@@ -20,12 +20,12 @@ public class Order {
         id++;
     }
 
-    public static int getId() {
+    public  int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Order.id = id;
+    public  void setId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {

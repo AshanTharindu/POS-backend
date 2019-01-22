@@ -5,13 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pos.mini.models.Item;
-import pos.mini.repositaries.ItemRepositary;
+import pos.mini.repositaries.ItemRepository;
 
 @SpringBootApplication
 public class MiniApplication implements CommandLineRunner {
 
     @Autowired
-    private ItemRepositary repository;
+    private ItemRepository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(MiniApplication.class, args);

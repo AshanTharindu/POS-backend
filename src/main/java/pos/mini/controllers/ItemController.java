@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pos.mini.models.Item;
-import pos.mini.repositaries.ItemRepositary;
+import pos.mini.repositaries.ItemRepository;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemController {
 
     @Autowired
-    private ItemRepositary itemRepositary;
+    private ItemRepository itemRepository;
 
     @RequestMapping("/")
     public String index() {
@@ -24,7 +24,7 @@ public class ItemController {
 
     @GetMapping("/showItems")
     public ResponseEntity<List<Item>> showOrders() {
-        List<Item> items = itemRepositary.findAll();
+        List<Item> items = itemRepository.findAll();
         for(Item item: items) {
             System.out.println(item.getName());
         }
