@@ -2,21 +2,21 @@ package pos.mini.models;
 
 public class ItemTracker {
 
-    private String itemName;
+    private int itemId;
     private int count;
     private double price;
     private double subTotal;
 
-    public ItemTracker(String itemName) {
-        this.itemName = itemName;
+    public ItemTracker(int itemId) {
+        this.itemId = itemId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setItemName(int itemId) {
+        this.itemId = itemId;
     }
 
     public int getCount() {
