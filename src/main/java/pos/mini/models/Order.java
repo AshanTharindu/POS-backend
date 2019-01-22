@@ -9,13 +9,14 @@ public class Order {
     @Id
     private static int id;
 
-    private User user;
+    private int userId;
     private double total;
     private boolean open;
     private List<ItemTracker> itemList;
 
-    public Order(User user) {
-        this.user = user;
+    public Order(){};
+    public Order(int userId) {
+        this.userId = userId;
         id++;
     }
 
@@ -27,12 +28,12 @@ public class Order {
         Order.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(int userId) {
+        this.userId = userId;
     }
 
     public double getTotal() {
