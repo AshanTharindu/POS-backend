@@ -8,6 +8,7 @@ public class ItemTracker {
     private double subTotal;
 
     public ItemTracker(int itemId) {
+
         this.itemId = itemId;
     }
 
@@ -25,6 +26,7 @@ public class ItemTracker {
 
     public void setCount(int count) {
         this.count = count;
+        setSubTotal(count, this.price);
     }
 
     public double getPrice() {
@@ -39,7 +41,7 @@ public class ItemTracker {
         return subTotal;
     }
 
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
+    public void setSubTotal(int count, double price) {
+        this.subTotal = price * count;
     }
 }

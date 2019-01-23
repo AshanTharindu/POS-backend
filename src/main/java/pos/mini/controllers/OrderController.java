@@ -1,5 +1,6 @@
 package pos.mini.controllers;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,15 +36,28 @@ public class OrderController {
         int itemId = updateObject.get("itemId");
         int count = updateObject.get("count");
         Order order = orderRepository.findById(orderId);
-        //update order
+
+        //remove later
         System.out.println(orderId);
         System.out.println(itemId);
         System.out.println(count);
-        Map<String, Double> updateOrder = updateOrder(order, itemId, count);
-        return new ResponseEntity<Map<String,Double>>(updateOrder, HttpStatus.OK);
+
+        //update order
+//        Map<String, String> updateOrder = updateOrder(order, itemId, count);
+        order = updateOrder(order, itemId, count);
+        orderRepository.save(order);
+
+        System.out.println("after update");
+        for(Order order1: orderRepository.findAll()){
+            System.out.println( "orderID: " +order1.getId());
+            System.out.println("orderTotal: " +order1.getTotal());
+        }
+//        return new ResponseEntity<Map<String,String>>(updateOrder, HttpStatus.OK);
+        return new ResponseEntity<Order>(order, HttpStatus.OK);
     }
 
-    public Map<String, Double> updateOrder(Order order, int itemId, int count) {
+    //update order logic
+    public Order updateOrder(Order order, int itemId, int count) {
         List<ItemTracker> itemTrackerList = order.getItemList();
         ItemTracker updatedItemTracker = null;
         for(ItemTracker itemTracker: itemTrackerList) {
@@ -51,17 +65,43 @@ public class OrderController {
                 updatedItemTracker = itemTracker;
             }
         }
+
         double subTotal = 0;
         double updatedSubTotal = 0;
+
         if(updatedItemTracker != null) {
             subTotal = updatedItemTracker.getSubTotal();
+            System.out.println("subtotal: " + subTotal);
             updatedSubTotal = updatedItemTracker.getPrice()* count;
+            System.out.println("updateSub: " + updatedSubTotal);
         }
-        Map<String, Double> updatedValues = new HashMap<>();
-        updatedValues.put("subTotal", updatedSubTotal);
+
         double total = order.getTotal() - subTotal + updatedSubTotal;
-        updatedValues.put("total", total);
-        return updatedValues;
+        Order orderTrackerUpdated = updateItemTracker(order, itemId, count);
+        orderTrackerUpdated.setTotal(total);
+
+        //returning map containing total & subtotal
+//
+//        Map<String, String> updatedValues = new HashMap<>();
+//        updatedValues.put("itemId", String.valueOf(itemId));
+//        updatedValues.put("subTotal", String.valueOf(updatedSubTotal));
+//        double total = order.getTotal() - subTotal + updatedSubTotal;
+//        updatedValues.put("total", String.valueOf(total));
+//        return updatedValues;
+
+        return order;
+    }
+
+    //update item tracker
+    public Order updateItemTracker(Order order, int itemId, int count) {
+        List<ItemTracker> itemList = order.getItemList();
+        for(ItemTracker itemTracker: itemList) {
+            if(itemTracker.getItemId() == itemId) {
+                itemTracker.setCount(count);
+            }
+        }
+        order.setItemList(itemList);
+        return order;
     }
 
     //save order

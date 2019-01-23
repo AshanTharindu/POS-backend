@@ -2,12 +2,15 @@ package pos.mini.models;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
 
     @Id
     private int id;
+
+    private static int idState = 0;
 
     private int userId;
     private double total;
@@ -17,7 +20,9 @@ public class Order {
     public Order(){};
     public Order(int userId) {
         this.userId = userId;
-        id++;
+        idState++;
+        id = idState;
+        itemList = new ArrayList<>();
     }
 
     public  int getId() {

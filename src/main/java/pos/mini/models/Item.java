@@ -1,13 +1,13 @@
 package pos.mini.models;
 
 import org.springframework.data.annotation.Id;
-
 import javax.validation.constraints.NotBlank;
 
 public class Item {
 
     @Id
     private int id;
+    private static int idState = 0;
 
     @NotBlank
     private String name;
@@ -18,7 +18,8 @@ public class Item {
     public Item(String name, double price) {
         this.name = name;
         this.price = price;
-        id++;
+        idState++;
+        id = idState;
     }
 
     public  int getId() {
