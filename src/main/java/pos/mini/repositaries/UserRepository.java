@@ -1,10 +1,14 @@
 package pos.mini.repositaries;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import pos.mini.models.Item;
+import pos.mini.models.User;
 
-public interface UserRepository extends MongoRepository<Item, String> {
+import java.util.Optional;
 
-    public Item findByName(String Name);
-    public Item findById(int id);
+public interface UserRepository extends MongoRepository<User, String> {
+
+    Optional<User> findByUsername(String username);
+    public User findById(int id);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 }

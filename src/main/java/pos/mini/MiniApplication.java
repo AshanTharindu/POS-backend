@@ -9,6 +9,7 @@ import pos.mini.models.ItemTracker;
 import pos.mini.models.Order;
 import pos.mini.repositaries.ItemRepository;
 import pos.mini.repositaries.OrderRepository;
+import pos.mini.repositaries.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ public class MiniApplication implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(MiniApplication.class, args);
     }
@@ -31,7 +35,8 @@ public class MiniApplication implements CommandLineRunner {
 
         repository.deleteAll();
         orderRepository.deleteAll();
-        // save a couple of customers
+//        userRepository.deleteAll();
+
         Item burger = repository.save(new Item("Burger", 50.0));
         Item coke = repository.save(new Item("Coke", 35.0));
 
@@ -59,23 +64,25 @@ public class MiniApplication implements CommandLineRunner {
 
         Order order2 = new Order(2);
 
+//        userRepository.save(new User("admin", "1066"));
+
 
 //        // fetch all customers
 //        System.out.println("Customers found with findAll():");
 //        System.out.println("-------------------------------");
-//        for (Customer customer : repository.findAll()) {
+//        for (User customer : repository.findAll()) {
 //            System.out.println(customer);
 //        }
 //        System.out.println();
 //
 //        // fetch an individual customer
-//        System.out.println("Customer found with findByFirstName('Alice'):");
+//        System.out.println("User found with findByFirstName('Alice'):");
 //        System.out.println("--------------------------------");
 //        System.out.println(repository.findByFirstName("Alice"));
 //
 //        System.out.println("Customers found with findByLastName('Smith'):");
 //        System.out.println("--------------------------------");
-//        for (Customer customer : repository.findByLastName("Smith")) {
+//        for (User customer : repository.findByLastName("Smith")) {
 //            System.out.println(customer);
 //        }
 

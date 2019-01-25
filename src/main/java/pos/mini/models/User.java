@@ -5,37 +5,57 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 
     @Id
-    private String id;
+    private long id;
+
+    private static int idState;
 
     @NotBlank
     private String name;
 
     @NotBlank
     @Indexed(unique = true)
-    private String userName;
+    private String username;
 
     @NotBlank
     @JsonIgnore
     private String password;
 
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    private Set<Role> roles = new HashSet<>();
+
     public User(){};
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        idState++;
+        id = idState;
+    }
 
 
     @Override
     public String toString() {
-        return userName;
+        return username;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -47,12 +67,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -61,5 +81,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
